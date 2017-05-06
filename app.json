@@ -1,5 +1,0 @@
-{
-  "name": "Coffee Saints starts on Heroku: Scala",
-  "description": "Coffee Saints in scala.",
-  "image": "heroku/scala"
-}
