@@ -1,17 +1,21 @@
-name := """coffee-saints-services"""
+import sbt.Keys._
+import sbt._
 
-version := "1.0-SNAPSHOT"
+name := "todos"
 
-lazy val root = (project in file(".")).enablePlugins(PlayScala)
-
-scalaVersion := "2.11.7"
+resolvers += Resolver.sonatypeRepo("public")
+scalaVersion := "2.11.8"
+assemblyJarName in assembly := "todos.jar"
 
 libraryDependencies ++= Seq(
-  jdbc,
-  cache,
-  "org.postgresql" % "postgresql" % "9.4-1201-jdbc41",
-  ws,
-  "org.jscience" % "jscience" % "4.3.1"
+  "com.amazonaws" % "aws-lambda-java-events" % "1.1.0",
+  "com.amazonaws" % "aws-lambda-java-core" % "1.1.0",
+  "com.github.seratch" %% "awscala" % "0.5.+",
+  "org.json4s" %% "json4s-native" % "3.4.2"
 )
 
-libraryDependencies <+= scalaVersion("org.scala-lang" % "scala-compiler" % _ )
+scalacOptions ++= Seq(
+  "-unchecked",
+  "-deprecation",
+  "-feature",
+  "-Xfatal-warnings")
