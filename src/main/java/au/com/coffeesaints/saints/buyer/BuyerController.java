@@ -24,9 +24,10 @@ public class BuyerController {
     }
 
     @PostMapping("/saints/{id}/buying")
-    public List<SaintEntity> buyingSaint(@PathVariable int id, @RequestBody List<Integer> saintIds) throws Exception {
-        buyerService.buyingSaint(id, saintIds);
-        return saintService.findIn(saintIds);
+    public List<SaintEntity> buyingSaint(@PathVariable int id, @RequestBody BuyerRequest buyerRequest) throws Exception {
+        buyerRequest.setBuyerId(id);
+        buyerService.buyingSaint(buyerRequest);
+        return saintService.findIn(buyerRequest.getSaintsConsumersIds());
     }
 
     @ExceptionHandler(Exception.class)
