@@ -1,0 +1,73 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1
+      author: saints
+      changes:
+        - createTable:
+            tableName: saint
+            columns:
+              - column:
+                  name: id
+                  type: integer
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: name
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: coffee_bought
+                  type: integer
+                  defaultValueNumeric: 0
+                  constraints:
+                    nullable: false
+              - column:
+                  name: coffee_consumed
+                  type: integer
+                  defaultValueNumeric: 0
+                  constraints:
+                    nullable: false
+              - column:
+                  name: created
+                  type: time with time zone
+                  defaultValueComputed: now()
+                  constraints:
+                    nullable: false
+              - column:
+                  name: modified
+                  type: time with time zone
+                  defaultValueComputed: now()
+                  constraints:
+                    nullable: false
+  - changeSet:
+      id: 2
+      author: saints
+      sql: DROP FUNCTION IF EXISTS last_modified();
+           CREATE FUNCTION public.last_modified()
+               RETURNS trigger
+               LANGUAGE 'plpgsql'
+               COST 100.0
+               VOLATILE NOT LEAKPROOF
+           AS $BODY$
+
+           BEGIN
+               NEW.modified = now();
+               RETURN NEW;
+           END
+
+           $BODY$;
+
+           ALTER FUNCTION public.last_modified()
+               OWNER TO postgres;
+  - changeSet:
+      id: 3
+      author: saints
+      sql: DROP TRIGGER IF EXISTS last_modified ON public.saint;
+           CREATE TRIGGER last_modified
+           BEFORE UPDATE
+           ON public.saint
+           FOR EACH ROW
+           EXECUTE PROCEDURE public.last_modified();

@@ -151,6 +151,26 @@
                 </executions>
             </plugin>
             <plugin>
+                <groupId>org.liquibase</groupId>
+                <artifactId>liquibase-maven-plugin</artifactId>
+                <version>3.0.5</version>
+                <configuration>
+                    <changeLogFile>src/main/resources/liquibase/saints.yaml</changeLogFile>
+                    <driver>org.postgresql.Driver</driver>
+                    <url>jdbc:postgresql://localhost:5432/coffee-saints</url>
+                    <username>bean-god</username>
+                    <password>password</password>
+                </configuration>
+                <executions>
+                    <execution>
+                        <phase>process-resources</phase>
+                        <goals>
+                            <goal>update</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
