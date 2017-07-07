@@ -88,11 +88,6 @@
             <artifactId>jooq-meta</artifactId>
             <version>3.9.3</version>
         </dependency>
-        <dependency>
-            <groupId>org.postgresql</groupId>
-            <artifactId>postgresql</artifactId>
-            <version>9.4-1201-jdbc4</version>
-        </dependency>
     </dependencies>
     <dependencyManagement>
         <dependencies>
@@ -132,9 +127,9 @@
                         <configuration>
                             <jdbc>
                                 <driver>org.postgresql.Driver</driver>
-                                <url>jdbc:postgresql://localhost:5432/coffee-saints</url>
-                                <user>bean-god</user>
-                                <password>password</password>
+                                <url>${env.SPRING_DATASOURCE_URL}</url>
+                                <user>${env.SPRING_DATASOURCE_USERNAME}</user>
+                                <password>${env.SPRING_DATASOURCE_PASSWORD}</password>
                             </jdbc>
 
                             <generator>
