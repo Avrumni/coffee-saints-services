@@ -28,8 +28,8 @@ public class SaintDao {
     public SaintEntity add(SaintEntity saintEntity) {
         return dsl
                 .insertInto(saint)
-                .columns(saint.NAME)
-                .values(saintEntity.getName())
+                .columns(saint.NAME, saint.COFFEE_BOUGHT, saint.COFFEE_CONSUMED)
+                .values(saintEntity.getName(), saintEntity.getCoffeeBought(), saintEntity.getCoffeeConsumed())
                 .returning().fetchOne().into(SaintEntity.class);
     }
 

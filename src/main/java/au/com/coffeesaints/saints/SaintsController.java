@@ -21,7 +21,7 @@ public class SaintsController {
     }
 
     @PostMapping("/saints")
-    public SaintEntity getSaints(@RequestBody SaintEntity saintEntity) {
+    public SaintEntity addSaint(@RequestBody SaintEntity saintEntity) {
         return saintService.add(saintEntity);
     }
 }
