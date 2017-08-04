@@ -24,14 +24,17 @@ public class BuyerController {
     }
 
     @PostMapping("/saints/{id}/buying")
-    public List<SaintEntity> buyingSaint(@PathVariable int id, @RequestBody BuyerRequest buyerRequest) throws Exception {
+    public List<SaintEntity> buyingSaint(@PathVariable int id, @RequestBody List<Integer> buyerIds) throws Exception {
+        BuyerRequest buyerRequest = new BuyerRequest();
         buyerRequest.setBuyerId(id);
+        buyerRequest.setSaintsConsumersIds(buyerIds);
         buyerService.buyingSaint(buyerRequest);
         return saintService.findIn(buyerRequest.getSaintsConsumersIds());
     }
 
     @ExceptionHandler(Exception.class)
-    public String unknownException() {
-        return "It broke";
+    public String unknownException(Exception e) {
+        log.error("unknownException was: " + e);
+        return "It broke because "  + e;
     }
 }

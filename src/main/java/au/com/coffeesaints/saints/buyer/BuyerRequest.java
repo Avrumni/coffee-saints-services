@@ -10,8 +10,8 @@ import javax.validation.constraints.NotNull;
 public class BuyerRequest {
 
     @NotNull
-    List<Integer> saintsConsumersIds;
+    public List<Integer> saintsConsumersIds;
 
     @NotNull
-    int buyerId;
+    public int buyerId;
 }
