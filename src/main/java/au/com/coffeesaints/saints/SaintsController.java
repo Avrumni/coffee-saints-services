@@ -26,9 +26,9 @@ public class SaintsController {
         return saintService.findAll();
     }
 
-    @GetMapping("/coffee-groups/{congregationId}/saints")
-    public List<SaintEntity> getSaintsInCongregation(@PathVariable Integer congregationId) {
-        return saintService.findAllInCongregation(congregationId);
+    @GetMapping("/coffee-groups/{coffeeGroupId}/saints")
+    public List<SaintEntity> getSaintsInCoffeeGroup(@PathVariable Integer coffeeGroupId) {
+        return saintService.findAllInCoffeeGroup(coffeeGroupId);
     }
 
     @PostMapping("/saints")

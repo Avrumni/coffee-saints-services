@@ -18,18 +18,15 @@ public class BuyerController {
     @Autowired
     private SaintService saintService;
 
-    @GetMapping("/saints/buying")
-    public SaintEntity saintBuyer(@RequestParam List<Integer> saintIds) throws Exception {
-        return buyerService.findBuyer(saintIds);
+    @GetMapping("/coffee-groups/{coffeeGroupId}/saints/buying")
+    public SaintEntity saintBuyer(@PathVariable Integer coffeeGroupId, @RequestParam List<Integer> saintIds) throws Exception {
+        return buyerService.findBuyer(coffeeGroupId, saintIds);
     }
 
-    @PostMapping("/saints/{id}/buying")
-    public List<SaintEntity> buyingSaint(@PathVariable int id, @RequestBody List<Integer> buyerIds) throws Exception {
-        BuyerRequest buyerRequest = new BuyerRequest();
-        buyerRequest.setBuyerId(id);
-        buyerRequest.setSaintsConsumersIds(buyerIds);
-        buyerService.buyingSaint(buyerRequest);
-        return saintService.findIn(buyerRequest.getSaintsConsumersIds());
+    @PostMapping("/coffee-groups/{coffeeGroupId}/saints/{buyerId}/buying")
+    public List<SaintEntity> buyingSaint(@PathVariable Integer coffeeGroupId, @PathVariable int buyerId, @RequestBody List<Integer> consumerIds) throws Exception {
+        buyerService.buyingSaint(coffeeGroupId, buyerId, consumerIds);
+        return saintService.findAllInCoffeeGroupAndInSaintIds(coffeeGroupId, consumerIds);
     }
 
     @ExceptionHandler(Exception.class)

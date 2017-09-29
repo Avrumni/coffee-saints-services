@@ -19,26 +19,26 @@ public class BuyerService {
     @Autowired
     private SaintService saintService;
 
-    public SaintEntity findBuyer(List<Integer> saintIds) throws Exception {
+    public SaintEntity findBuyer(Integer coffeeGroupId, List<Integer> saintIds) throws Exception {
         log.info("finding buyer for ids '{}'", saintIds);
-        return saintService.findIn(saintIds).stream()
+        return saintService.findAllInCoffeeGroupAndInSaintIds(coffeeGroupId, saintIds).stream()
             .min(Comparator.comparing(this::calcCoffeeBalance))
             .orElseThrow(() -> new Exception("failed to find buyer"));
     }
 
-    public void buyingSaint(BuyerRequest buyerRequest) throws Exception {
+    public void buyingSaint(Integer congregationId, Integer buyerId, List<Integer> consumerIds) throws Exception {
         final int COFFEE_VALUE = 1;
         List<Integer> saints = new ArrayList<>();
-        saints.addAll(buyerRequest.getSaintsConsumersIds());
-        saints.add(buyerRequest.getBuyerId());
-        List<SaintEntity> saintEntities = saintService.findIn(saints);
+        saints.addAll(consumerIds);
+        saints.add(buyerId);
+        List<SaintEntity> saintEntities = saintService.findAllInCoffeeGroupAndInSaintIds(congregationId, saints);
 
 
         Map<Transaction, List<SaintEntity>> isBuyer = saintEntities.stream()
             .collect(Collectors.groupingBy(saint ->
-                saint.getId() == buyerRequest.getBuyerId() ? Transaction.BUYER : Transaction.CONSUMER));
+                saint.getId() == buyerId ? Transaction.BUYER : Transaction.CONSUMER));
 
-        if (buyerRequest.getSaintsConsumersIds().contains(buyerRequest.getBuyerId())) {
+        if (consumerIds.contains(buyerId)) {
             isBuyer.get(Transaction.CONSUMER).addAll(isBuyer.get(Transaction.BUYER));
         }
 

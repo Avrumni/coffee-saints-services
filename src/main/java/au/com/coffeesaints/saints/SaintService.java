@@ -14,12 +14,12 @@ public class SaintService {
         return saintDao.findAll();
     }
 
-    public List<SaintEntity> findIn(List<Integer> saintIds) {
-        return saintDao.findIn(saintIds);
+    public List<SaintEntity> findAllInCoffeeGroupAndInSaintIds(Integer coffeeGroupId, List<Integer> saintIds) {
+        return saintDao.findAllInCoffeeGroupAndInSaintIds(coffeeGroupId, saintIds);
     }
 
-    public List<SaintEntity> findAllInCongregation(Integer congregationId) {
-        return saintDao.findAllInCongregation(congregationId);
+    public List<SaintEntity> findAllInCoffeeGroup(Integer congregationId) {
+        return saintDao.findAllInCoffeeGroup(congregationId);
     }
 
     public SaintEntity add(SaintEntity saintEntity) {

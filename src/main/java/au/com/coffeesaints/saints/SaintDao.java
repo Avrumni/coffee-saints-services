@@ -53,11 +53,12 @@ public class SaintDao {
                 .returning().fetchOne().into(SaintEntity.class);
     }
 
-    public List<SaintEntity> findIn(Collection<Integer> saintIds) {
+    public List<SaintEntity> findAllInCoffeeGroupAndInSaintIds(Integer coffeeGroupId, Collection<Integer> saintIds) {
         return dsl
                 .select(saint.ID, saint.NAME, saint.COFFEE_BOUGHT, saint.COFFEE_CONSUMED)
                 .from(saint)
                 .where(saint.ID.in(saintIds))
+                    .and(saint.COFFEE_GROUP_ID.eq(coffeeGroupId))
                 .fetchInto(SaintEntity.class);
 
     }
@@ -81,7 +82,7 @@ public class SaintDao {
         return saintEntities;
     }
 
-    public List<SaintEntity> findAllInCongregation(Integer coffeeGroupId){
+    public List<SaintEntity> findAllInCoffeeGroup(Integer coffeeGroupId){
         return dsl
             .select(saint.ID, saint.NAME, saint.COFFEE_BOUGHT, saint.COFFEE_CONSUMED)
             .from(saint)
