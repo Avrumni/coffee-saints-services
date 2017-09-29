@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @Slf4j
@@ -23,12 +24,16 @@ public class CoffeeGroupController {
     }
 
     @GetMapping
-    public List<CoffeeGroupEntity> getCongregations() throws Exception {
-        return coffeeGroupService.findAll();
+    public List<CoffeeGroupResponse> getCongregations() throws Exception {
+        return coffeeGroupService.findAll().stream()
+            .map(CoffeeGroupMapper::map)
+            .collect(Collectors.toList());
     }
 
     @PostMapping
-    public CoffeeGroupEntity create(@RequestBody CoffeeGroupEntity coffeeGroupEntity) {
-        return coffeeGroupService.create(coffeeGroupEntity);
+    public CoffeeGroupResponse create(@RequestBody CoffeeGroupRequest coffeeGroupRequest) {
+        return CoffeeGroupMapper.map(
+            coffeeGroupService.create(
+                CoffeeGroupMapper.map(coffeeGroupRequest)));
     }
 }
