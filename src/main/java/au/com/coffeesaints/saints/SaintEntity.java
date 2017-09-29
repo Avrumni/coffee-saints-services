@@ -1,30 +1,29 @@
 package au.com.coffeesaints.saints;
 
-import au.com.coffeesaints.db.generated.tables.Saint;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.jooq.impl.TableImpl;
 
-import javax.validation.constraints.NotNull;
+import javax.persistence.Column;
 
 @Data
+@Builder
 @NoArgsConstructor
+@AllArgsConstructor
 public class SaintEntity {
-    int id;
+    private Integer id;
+    private String name;
+    private Integer coffeeBought;
+    private Integer coffeeConsumed;
+    private Integer coffeeGroupId;
 
-    @NotNull
-    String name;
-
-    int coffeeBought;
-
-    int coffeeConsumed;
-
-    public int incrementCoffeeConsumed(int amount) {
+    public Integer incrementCoffeeConsumed(Integer amount) {
         this.coffeeConsumed += amount;
         return this.coffeeConsumed;
     }
 
-    public int incrementCoffeeBought(int amount) {
+    public Integer incrementCoffeeBought(Integer amount) {
         this.coffeeBought += amount;
         return this.coffeeBought;
     }

@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @Log4j
@@ -22,17 +23,24 @@ public class SaintsController {
 
     @Deprecated
     @GetMapping("/saints")
-    public List<SaintEntity> getSaints() {
-        return saintService.findAll();
+    public List<SaintResponse> getSaints() {
+        return saintService.findAll().stream()
+            .map(SaintMapper::map)
+            .collect(Collectors.toList());
     }
 
     @GetMapping("/coffee-groups/{coffeeGroupId}/saints")
-    public List<SaintEntity> getSaintsInCoffeeGroup(@PathVariable Integer coffeeGroupId) {
-        return saintService.findAllInCoffeeGroup(coffeeGroupId);
+    public List<SaintResponse> getSaintsInCoffeeGroup(@PathVariable Integer coffeeGroupId) {
+        return saintService.findAllInCoffeeGroup(coffeeGroupId).stream()
+            .map(SaintMapper::map)
+            .collect(Collectors.toList());
     }
 
-    @PostMapping("/saints")
-    public SaintEntity addSaint(@RequestBody SaintEntity saintEntity) {
-        return saintService.add(saintEntity);
+    @PostMapping("/coffee-groups/{coffeeGroupId}/saints")
+    public SaintResponse addSaint(@PathVariable Integer coffeeGroupId, @RequestBody SaintRequest saintRequest) {
+        SaintEntity saintEntity = SaintMapper.map(saintRequest);
+        saintEntity.setCoffeeGroupId(coffeeGroupId);
+
+        return SaintMapper.map(saintService.add(saintEntity));
     }
 }

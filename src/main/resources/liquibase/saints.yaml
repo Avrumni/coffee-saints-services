@@ -124,3 +124,15 @@ databaseChangeLog:
         - addNotNullConstraint:
             columnName: coffee_group_id
             tableName: saint
+  - changeSet:
+      id: add default values for coffee
+      author: saints
+      changes:
+        - addDefaultValue:
+            tableName: saint
+            columnName: coffee_bought
+            defaultValueNumeric: 0
+        - addDefaultValue:
+            tableName: saint
+            columnName: coffee_consumed
+            defaultValueNumeric: 0

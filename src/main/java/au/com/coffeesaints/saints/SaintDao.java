@@ -24,7 +24,7 @@ public class SaintDao {
     public List<SaintEntity> findAll() {
 
         return dsl
-                .select(saint.ID, saint.NAME, saint.COFFEE_BOUGHT, saint.COFFEE_CONSUMED)
+                .select()
                 .from(saint)
                 .fetchInto(SaintEntity.class);
     }
@@ -39,7 +39,7 @@ public class SaintDao {
         }
 
         return dsl
-            .select(saint.ID, saint.NAME, saint.COFFEE_BOUGHT, saint.COFFEE_CONSUMED)
+            .select()
             .from(saint)
             .where(conditions)
             .fetchInto(SaintEntity.class);
@@ -48,14 +48,14 @@ public class SaintDao {
     public SaintEntity add(SaintEntity saintEntity) {
         return dsl
                 .insertInto(saint)
-                .columns(saint.NAME, saint.COFFEE_BOUGHT, saint.COFFEE_CONSUMED)
-                .values(saintEntity.getName(), saintEntity.getCoffeeBought(), saintEntity.getCoffeeConsumed())
+                .columns(saint.NAME, saint.COFFEE_GROUP_ID)
+                .values(saintEntity.getName(), saintEntity.getCoffeeGroupId())
                 .returning().fetchOne().into(SaintEntity.class);
     }
 
     public List<SaintEntity> findAllInCoffeeGroupAndInSaintIds(Integer coffeeGroupId, Collection<Integer> saintIds) {
         return dsl
-                .select(saint.ID, saint.NAME, saint.COFFEE_BOUGHT, saint.COFFEE_CONSUMED)
+                .select()
                 .from(saint)
                 .where(saint.ID.in(saintIds))
                     .and(saint.COFFEE_GROUP_ID.eq(coffeeGroupId))
@@ -84,7 +84,7 @@ public class SaintDao {
 
     public List<SaintEntity> findAllInCoffeeGroup(Integer coffeeGroupId){
         return dsl
-            .select(saint.ID, saint.NAME, saint.COFFEE_BOUGHT, saint.COFFEE_CONSUMED)
+            .select()
             .from(saint)
             .where(saint.COFFEE_GROUP_ID.eq(coffeeGroupId))
             .fetchInto(SaintEntity.class);
