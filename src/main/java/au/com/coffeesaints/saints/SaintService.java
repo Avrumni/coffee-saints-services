@@ -18,6 +18,10 @@ public class SaintService {
         return saintDao.findIn(saintIds);
     }
 
+    public List<SaintEntity> findAllInCongregation(Integer congregationId) {
+        return saintDao.findAllInCongregation(congregationId);
+    }
+
     public SaintEntity add(SaintEntity saintEntity) {
         return saintDao.add(saintEntity);
     }

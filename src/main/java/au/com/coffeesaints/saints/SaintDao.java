@@ -1,8 +1,12 @@
 package au.com.coffeesaints.saints;
 
+import static org.jooq.impl.DSL.trueCondition;
+
 import au.com.coffeesaints.db.generated.tables.Saint;
 import org.jooq.DSLContext;
 import org.jooq.UpdateConditionStep;
+import org.jooq.tools.StringUtils;
+import org.jooq.Condition;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,6 +27,22 @@ public class SaintDao {
                 .select(saint.ID, saint.NAME, saint.COFFEE_BOUGHT, saint.COFFEE_CONSUMED)
                 .from(saint)
                 .fetchInto(SaintEntity.class);
+    }
+
+    public List<SaintEntity> find(SaintEntity queryObject) {
+        Condition conditions = trueCondition();
+
+        if (!StringUtils.isBlank(queryObject.getName()))
+            conditions.and(saint.NAME.like("%" + queryObject.getName() + "%"));
+        if (queryObject.getId()  != 0){
+            conditions.and(saint.ID.eq(queryObject.getId()));
+        }
+
+        return dsl
+            .select(saint.ID, saint.NAME, saint.COFFEE_BOUGHT, saint.COFFEE_CONSUMED)
+            .from(saint)
+            .where(conditions)
+            .fetchInto(SaintEntity.class);
     }
 
     public SaintEntity add(SaintEntity saintEntity) {
@@ -59,5 +79,13 @@ public class SaintDao {
         }
 
         return saintEntities;
+    }
+
+    public List<SaintEntity> findAllInCongregation(Integer coffeeGroupId){
+        return dsl
+            .select(saint.ID, saint.NAME, saint.COFFEE_BOUGHT, saint.COFFEE_CONSUMED)
+            .from(saint)
+            .where(saint.COFFEE_GROUP_ID.eq(coffeeGroupId))
+            .fetchInto(SaintEntity.class);
     }
 }

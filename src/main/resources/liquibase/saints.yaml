@@ -71,3 +71,56 @@ databaseChangeLog:
            ON public.saint
            FOR EACH ROW
            EXECUTE PROCEDURE public.last_modified();
+  - changeSet:
+      id: add groups
+      author: saints
+      changes:
+        - createTable:
+            tableName: coffee_group
+            columns:
+              - column:
+                  name: id
+                  type: integer
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: name
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: description
+                  type: varchar(512)
+              - column:
+                  name: created
+                  type: time with time zone
+                  defaultValueComputed: now()
+                  constraints:
+                    nullable: false
+              - column:
+                  name: modified
+                  type: time with time zone
+                  defaultValueComputed: now()
+                  constraints:
+                    nullable: false
+        - addColumn:
+            tableName: saint
+            columns:
+              - column:
+                  name: coffee_group_id
+                  type: integer
+                  constraints:
+                    foreignKeyName: fk_saint_coffee_group
+                    references: coffee_group(id)
+                    nullable: true
+        - sql:
+            sql: insert into coffee_group("name", "description")
+                 values('MotoMe', 'A bunch of awesome people doing awesome things');
+
+                 update saint
+                 set coffee_group_id = (select id from coffee_group where name = 'MotoMe')
+        - addNotNullConstraint:
+            columnName: coffee_group_id
+            tableName: saint
