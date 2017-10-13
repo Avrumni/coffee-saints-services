@@ -5,6 +5,7 @@ The best way to coffee! Find out who's turn it is to buy coffee :)
 ## Requirements
 
 * Java, Maven
+* Postgresql
 
 ## Starting
 
