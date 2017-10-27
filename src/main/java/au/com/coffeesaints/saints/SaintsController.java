@@ -29,6 +29,11 @@ public class SaintsController {
             .collect(Collectors.toList());
     }
 
+    @PostMapping("/saints/{saintId}/lash")
+    public SaintResponse lashSaint(@PathVariable Integer saintId) throws Exception {
+        return SaintMapper.map(saintService.lash(saintId));
+    }
+
     @GetMapping("/coffee-groups/{coffeeGroupId}/saints")
     public List<SaintResponse> getSaintsInCoffeeGroup(@PathVariable Integer coffeeGroupId) {
         return saintService.findAllInCoffeeGroup(coffeeGroupId).stream()

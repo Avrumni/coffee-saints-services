@@ -22,6 +22,12 @@ public class SaintService {
         return saintDao.findAllInCoffeeGroup(congregationId);
     }
 
+    public SaintEntity lash(Integer saintId) throws Exception {
+        SaintEntity saint = saintDao.get(saintId);
+        saint.incrementCoffeeOffset(1);
+        return saintDao.update(saint);
+    }
+
     public SaintEntity add(SaintEntity saintEntity) {
         return saintDao.add(saintEntity);
     }

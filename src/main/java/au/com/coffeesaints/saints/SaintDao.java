@@ -29,6 +29,15 @@ public class SaintDao {
                 .fetchInto(SaintEntity.class);
     }
 
+    public SaintEntity get(Integer saintId) {
+
+        return dsl
+                .select()
+                .from(saint)
+                .where(saint.ID.eq(saintId))
+                .fetchOne().into(SaintEntity.class);
+    }
+
     public List<SaintEntity> find(SaintEntity queryObject) {
         Condition conditions = trueCondition();
 
@@ -61,6 +70,16 @@ public class SaintDao {
                     .and(saint.COFFEE_GROUP_ID.eq(coffeeGroupId))
                 .fetchInto(SaintEntity.class);
 
+    }
+
+    public SaintEntity update(SaintEntity saintEntity) throws Exception {
+        return dsl.update(saint)
+                .set(saint.NAME, saintEntity.getName())
+                .set(saint.COFFEE_BOUGHT, saintEntity.getCoffeeBought())
+                .set(saint.COFFEE_CONSUMED, saintEntity.getCoffeeConsumed())
+                .set(saint.COFFEE_OFFSET, saintEntity.getCoffeeOffset())
+                .where(saint.ID.eq(saintEntity.getId()))
+                .returning().fetchOne().into(SaintEntity.class);
     }
 
     public List<SaintEntity> update(List<SaintEntity> saintEntities) throws Exception {
