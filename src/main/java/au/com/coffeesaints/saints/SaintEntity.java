@@ -17,6 +17,7 @@ public class SaintEntity {
     private Integer coffeeBought;
     private Integer coffeeConsumed;
     private Integer coffeeGroupId;
+    private Integer coffeeOffset;
 
     public Integer incrementCoffeeConsumed(Integer amount) {
         this.coffeeConsumed += amount;
@@ -26,5 +27,10 @@ public class SaintEntity {
     public Integer incrementCoffeeBought(Integer amount) {
         this.coffeeBought += amount;
         return this.coffeeBought;
+    }
+
+    public Integer incrementCoffeeOffset(Integer amount) {
+        this.coffeeOffset += amount;
+        return this.coffeeOffset;
     }
 }

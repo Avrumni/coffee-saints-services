@@ -17,4 +17,5 @@ public class SaintResponse {
     private Integer coffeeGroupId;
     private Integer coffeeBought;
     private Integer coffeeConsumed;
+    private Integer coffeeOffset;
 }

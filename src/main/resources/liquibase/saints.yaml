@@ -136,3 +136,14 @@ databaseChangeLog:
             tableName: saint
             columnName: coffee_consumed
             defaultValueNumeric: 0
+  - changeSet:
+       id: add coffee offset
+       author: saints
+       changes:
+         - addColumn:
+             tableName: saint
+             columns:
+               - column:
+                   name: coffee_offset
+                   type: integer
+                   defaultValueNumeric: 0

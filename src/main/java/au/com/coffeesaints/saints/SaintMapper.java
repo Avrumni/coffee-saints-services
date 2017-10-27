@@ -14,6 +14,7 @@ public class SaintMapper {
             .coffeeGroupId(saint.getCoffeeGroupId())
             .coffeeBought(saint.getCoffeeBought())
             .coffeeConsumed(saint.getCoffeeConsumed())
+            .coffeeOffset(saint.getCoffeeOffset())
             .build();
     }
 }

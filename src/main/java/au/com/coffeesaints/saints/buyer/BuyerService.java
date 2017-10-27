@@ -45,12 +45,11 @@ public class BuyerService {
         isBuyer.get(Transaction.CONSUMER).forEach(saint -> saint.incrementCoffeeConsumed(COFFEE_VALUE));
         isBuyer.get(Transaction.BUYER).forEach(saint -> saint.incrementCoffeeBought(isBuyer.get(Transaction.CONSUMER).size() * COFFEE_VALUE));
 
-
         saintService.update(saintEntities);
     }
 
     public int calcCoffeeBalance(SaintEntity saintEntity) {
-        return saintEntity.getCoffeeBought() - saintEntity.getCoffeeConsumed();
+        return saintEntity.getCoffeeBought() - saintEntity.getCoffeeConsumed() - saintEntity.getCoffeeOffset();
     }
 
    private enum Transaction {
