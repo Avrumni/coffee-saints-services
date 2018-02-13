@@ -6,6 +6,13 @@ The best way to coffee! Find out who's turn it is to buy coffee :)
 
 * Java, Maven
 * Postgresql
+* User setup
+
+```
+psql
+create database "coffee-saints"
+CREATE ROLE "bean-god" WITH LOGIN PASSWORD 'password';
+```
 
 ## Starting
 
